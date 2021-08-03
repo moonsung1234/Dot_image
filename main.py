@@ -12,7 +12,7 @@ def get_clicked_position() :
         if mouse.is_pressed("left") :
             return mouse.get_position()
 
-def get_colors_arr(position) :
+def get_colors_arr(screen, position) :
     return_arr = []
 
     for y in range(position[1], position[1] + 27 + 1, 27) :
@@ -24,7 +24,7 @@ def get_colors_arr(position) :
 
     return return_arr
 
-def get_similar_rgb_position(screen, arr, rgb) :
+def get_similar_rgb_position(arr, rgb) :
     r, g, b = rgb
 
     return sorted(arr, key=lambda color : abs(color[1][0]-r)+abs(color[1][1]-g)+abs(color[1][2]-b))[0]
@@ -63,7 +63,7 @@ print("ok")
 time.sleep(0.2)
 
 cx, cy = get_clicked_position()
-arr = get_colors_arr((cx, cy))
+arr = get_colors_arr(screen, (cx, cy))
 
 print("ok")
 
@@ -71,7 +71,7 @@ before_rgb = None
 
 for i in range(len(result_image)) :
     for j in range(len(result_image[0])) :
-        (mx, my), mrgb = get_similar_rgb_position(screen, arr, result_image[i][j])
+        (mx, my), mrgb = get_similar_rgb_position(arr, result_image[i][j])
         
         if mrgb != before_rgb :
             pg.moveTo(x=mx, y=my)
